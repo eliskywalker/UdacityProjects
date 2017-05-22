@@ -1,3 +1,7 @@
+
+
+
+
 game_data = {
    'easy': {
         'quiz': 'Psalms 119:1 ___1___ are ___2___ of ___3___ who follow the ___4___ of the ___5___',
@@ -13,7 +17,6 @@ game_data = {
     }
 }
 
-
 current_blanks = ["___1___","___2___","___3___","___4___","___5___"]
 
 difficulty_levels = ['easy', 'medium', 'hard']
@@ -24,13 +27,16 @@ def selection_in_difficulty_levels(selection, difficulty_levels):
         if level in selection:
             return level
     return -1
-#this function verifies if a word (string pieces separated by spaces from the "current quiz") is in fact an item from the list "current_blanks"
+#this function verifies if a word (string pieces separated by spaces from the "current quiz")
+#is in fact an item from the list "current_blanks"
 def is_word_a_blank_in_current_blanks(word, current_blanks):
     for current_gap in current_blanks:
         if current_gap in word:
             return current_gap
     return None
 
+#this function locates the index of the expected answer inside the current_blank list and returns the index if the user_input
+#matches an answer (item) in the list or otherwise returns the index of the current guess
 def index_of_answer_in_answers(guess,current_blanks,user_input, current_answers):
     for index, answer in enumerate(current_answers):
         if answer == user_input:
@@ -73,6 +79,7 @@ Possible choices include easy, medium, and hard.\n"""
 The current paragraph reads as such:\n"""
     return (game_data[user_selected_level]['quiz'], game_data[user_selected_level]['answers'])
 
+#this function manages the other functions
 def run_game():
     current_quiz, current_answers = user_choice()
     selected_string = current_quiz
@@ -83,7 +90,6 @@ def run_game():
 def play_game(selected_string, current_quiz,  current_answers):
     replaced = []
     print selected_string
-
     tries = 5
     current_quiz = current_quiz.split()
     for word in current_quiz:
@@ -101,8 +107,6 @@ def play_game(selected_string, current_quiz,  current_answers):
                 else:
                     user_input = raw_input("what should be substituted in for " + guess + "? ")
                     updated_quiz =  " ".join(replaced) + selected_string[int(selected_string.find(guess)) + len(guess):]
-
-
             word = word.replace(guess,user_input)
             replaced.append(word)
             updated_quiz =  " ".join(replaced) + selected_string[int(selected_string.find(guess)) + len(guess):]
